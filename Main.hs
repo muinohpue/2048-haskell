@@ -10,7 +10,7 @@ import Control.Monad.Trans (liftIO)
 import TwoZeroFourEight
 
 main :: IO ()
-main = serve (Just ServerConfig {port=8080}) myApp
+main = serve Nothing myApp
 
 myApp :: ServerPart Response
 myApp = msum
