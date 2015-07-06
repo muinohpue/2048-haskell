@@ -24,11 +24,16 @@ hello :: ServerPart Response
 hello = ok $ toResponse ("Hello World!" :: String)
 
 start :: ServerPart Response
-start = do movements <- liftIO $ getStdRandom initMovements
-           ok $ toResponse $ encode movements
+start = do
+    setHeaderM "Access-Control-Allow-Origin" "*"
+    setHeaderM "Access-Control-Allow-Headers" "Origin, X-Requested-With, Content-Type, Accept"
+    movements <- liftIO $ getStdRandom initMovements
+    ok $ toResponse $ encode movements
 
 move :: ServerPart Response
 move = do method POST
+          setHeaderM "Access-Control-Allow-Origin" "*"
+          setHeaderM "Access-Control-Allow-Headers" "Origin, X-Requested-With, Content-Type, Accept"
           txtDrct <- lookText "direction"
           txtTable <- lookText "table"
           let drct = read $ unpack txtDrct :: Direction
