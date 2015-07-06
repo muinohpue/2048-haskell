@@ -39,5 +39,8 @@ move = do method POST
           let drct = read $ unpack txtDrct :: Direction
               table = read $ unpack txtTable :: [[Int]]
               mss = getMovements drct table
-          movements <- liftIO $ getStdRandom (setNewNumber mss)
+              nss = fromMovements mss
+          movements <- if nss == table
+                          then return mss
+                          else liftIO $ getStdRandom (setNewNumber mss)
           ok $ toResponse $ encode movements
