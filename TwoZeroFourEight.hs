@@ -63,6 +63,7 @@ getMovements drct nss =
           where n = locate p nss
         matchl lst@(p1:p2:ps)
             | n1 == 0 = matchl (p2:ps)
+            | n2 == 0 = matchl (p1:ps)
             | n1 == n2 = Add p1 p2 (n1+n2) : matchl ps
             | otherwise = Keep p1 n1 : matchl (p2:ps)
           where n1 = locate p1 nss
